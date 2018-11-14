@@ -1,0 +1,13 @@
+<svg width="61px" height="61px" viewBox="0 0 61 61" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="web_logged.in" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="web_my_subscription_manage_unsubscribe" transform="translate(-690.000000, -194.000000)">
+            <g id="Page-1-Copy" transform="translate(690.000000, 194.000000)">
+                <path d="M30.5,5.22857143 C16.5658571,5.22857143 5.22857143,16.5658571 5.22857143,30.5 C5.22857143,44.4341429 16.5658571,55.7714286 30.5,55.7714286 C44.4341429,55.7714286 55.7714286,44.4341429 55.7714286,30.5 C55.7714286,16.5658571 44.4341429,5.22857143 30.5,5.22857143 M30.5,61 C13.6831714,61 0,47.3168286 0,30.5 C0,13.6831714 13.6831714,0 30.5,0 C47.3168286,0 61,13.6831714 61,30.5 C61,47.3168286 47.3168286,61 30.5,61" id="Fill-3" fill="#FFE600"></path>
+                <g id="Group-18" transform="translate(29.000000, 16.000000)" stroke="#FFE600" stroke-linecap="round" stroke-linejoin="round" stroke-width="5.19999981">
+                    <path d="M1.5,0.993059036 L1.5,19.0055549" id="Line"></path>
+                    <path d="M1.5,26.9386126 L1.5,29.0055549" id="Line-Copy-3"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

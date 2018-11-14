@@ -3,28 +3,27 @@ import axios from 'axios';
 import * as actionTypes from './actionTypes';
 import { BASE_URL } from '../../config';
 
-
-// LOGIN
-export function userIsLoggingIn(bool) {
+// LOGIN.
+export const userIsLoggingIn = () => {
   return {
     type: actionTypes.USER_IS_LOGGING_IN
   };
-}
+};
 
-export function userLoginFailed(error) {
+export const userLoginFailed = error => {
   return {
     type: actionTypes.USER_LOGIN_FAILED,
     error: error
   };
-}
+};
 
-export function userLoginSuccess(token, userId) {
+export const userLoginSuccess = (token, userId) => {
   return {
     type: actionTypes.USER_LOGIN_SUCCESS,
     tokenId: token,
     userId: userId
   };
-}
+};
 
 export const logout = () => {
   localStorage.removeItem('token');
@@ -35,6 +34,12 @@ export const logout = () => {
   };
 };
 
+const config = {
+  //configuration for axios
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+};
 export const auth = (email, password, isSignup) => {
   return dispatch => {
     dispatch(userIsLoggingIn());
@@ -47,8 +52,9 @@ export const auth = (email, password, isSignup) => {
     if (!isSignup) {
       //////  url = "something else"
     }
+
     axios
-      .post(url, authData)
+      .post(url, authData, config)
       .then(response => {
         const expirationDate = new Date(
           new Date().getTime() + response.data.expiresIn * 1000 // to get expire time of token
@@ -104,7 +110,7 @@ export const userVerifyTAC = (msisdn, tac, isRegister, token) => {
     };
     let url = `${BASE_URL}verify-tac`;
     axios
-      .post(url, authVerifyTac)
+      .post(url, authVerifyTac, config)
       .then(response => {
         dispatch(userVerifySuccess(response.status));
       })
@@ -124,7 +130,7 @@ export const userResendTAC = (msisdn, token) => {
 
     let url = `${BASE_URL}resend-tac`;
     axios
-      .post(url, resendTacData)
+      .post(url, resendTacData, config)
       .then(response => {
         dispatch(userResendTACSuccess(response.status));
       })
@@ -134,104 +140,44 @@ export const userResendTAC = (msisdn, token) => {
   };
 };
 
-// export function userLogin(body) {
-//     return dispatch => {
-//       dispatch(userIsLoggingIn(true));
-//       return getCSRFToken()
-//         .then(token => {
-//           body['_token'] = token;
+/////////Registering --
+export const userIsRegistering = () => {
+  return {
+    type: actionTypes.USER_IS_REGISTERING
+  };
+};
 
-//           var _link = BASE_URL + 'login';
-//           return fetch(_link, {
-//             method: 'POST',
-//             headers: {
-//               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-//             },
-//             body: urlEncodeBody(body)
-//           });
-//         })
-//         .then(response => {
-//           if (!response.ok) throw Error(response.statusText);
+export const userRegisterFailed = error => {
+  return {
+    type: actionTypes.USER_REGISTER_FAILED,
+    error: error
+  };
+};
 
-//           dispatch(userIsLoggingIn(false));
-//           return response;
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//           console.log('LOGIN', data);
-//           if (data.status === 'success') dispatch(userLoginSuccess(true));
-//           else dispatch(userLoginFailed(data.message));
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     };
-//   }
+export const userRegisterSuccess = status => {
+  return {
+    type: actionTypes.USER_REGISTER_SUCCESS,
+    status: status
+  };
+};
 
-// export function userVerifyTAC(body) {
-//     return dispatch => {
-//       dispatch(userIsVerifying(true));
-//       return getCSRFToken()
-//         .then(token => {
-//           body['_token'] = token;
-
-//           var _link = BASE_URL + 'verify-tac';
-//           return fetch(_link, {
-//             method: 'POST',
-//             headers: {
-//               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-//             },
-//             body: urlEncodeBody(body)
-//           });
-//         })
-//         .then(response => {
-//           if (!response.ok) throw Error(response.statusText);
-
-//           dispatch(userIsVerifying(false));
-//           return response;
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//           console.log('VERIFY-TAC', data);
-//           if (data.status === 'success') dispatch(userVerifySuccess(true));
-//           else dispatch(userVerifyFailed(data.message));
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     };
-//   }
-
-// export function userResendTAC(body) {
-//     return dispatch => {
-//       dispatch(userIsVerifying(true));
-//       return getCSRFToken()
-//         .then(token => {
-//           body['_token'] = token;
-
-//           var _link = BASE_URL + 'resend-tac';
-//           return fetch(_link, {
-//             method: 'POST',
-//             headers: {
-//               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-//             },
-//             body: urlEncodeBody(body)
-//           });
-//         })
-//         .then(response => {
-//           if (!response.ok) throw Error(response.statusText);
-
-//           dispatch(userIsVerifying(false));
-//           return response;
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//           console.log('RESEND-TAC', data);
-//           if (data.status === 'success') dispatch(userResendTACSuccess(true));
-//           else dispatch(userVerifyFailed(data.message));
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     };
-//   }
+export const userRegister = (name, email, msisdn, token) => {
+  return dispatch => {
+    dispatch(userIsRegistering());
+    const userRegisteData = {
+      name,
+      email,
+      msisdn,
+      token
+    };
+    let url = `${BASE_URL}register`;
+    axios
+      .post(url, userRegisteData, config)
+      .then(response => {
+        dispatch(userRegisterSuccess(response.status));
+      })
+      .catch(error => {
+        dispatch(userRegisterFailed(error.message));
+      });
+  };
+};

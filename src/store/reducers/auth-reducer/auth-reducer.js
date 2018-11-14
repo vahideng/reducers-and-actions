@@ -5,7 +5,10 @@ const initialState = {
   userId: null,
   error: null,
   loading: false,
-  authRedirectPath: '/'
+  authRedirectPath: '/',
+  register : false,
+  login : false,
+  verified: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -28,7 +31,8 @@ const reducer = (state = initialState, action) => {
         token: action.idToken,
         userId: action.userId,
         error: null,
-        loading: false
+        loading: false,
+        login: true
       };
     case actionTypes.USER_IS_VERIFYING:
       return {
@@ -48,7 +52,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.userVerifySuccess,
-        loading: false
+        loading: false,
+        verified: true
       };
     case actionTypes.USER_RESEND_TAC_SUCCESS:
       return {
@@ -75,7 +80,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: null
+        error: null,
+        register : true
         //  action.userRegisterFailed
       };
 
